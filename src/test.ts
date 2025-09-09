@@ -34,7 +34,7 @@ async function testEcoCashSDK() {
     });
 
     if (paymentResult.success) {
-      console.log("✅ Payment successful!");
+      console.log("✅ Payment Request successfully sent!");
       console.log("Reference:", paymentResult.reference);
       console.log("Status:", paymentResult.status);
       console.log(
