@@ -4,10 +4,12 @@ import { EcoCashRefund } from "./EcoCashRefund";
 
 // Test configuration
 const config = {
-  apiKey: "IxPMsN8xsZCHkBgWcy1UZ4hhOKmc-Y1-", // Sandbox key from docs
+  apiKey: process.env.ECOCASH_API_KEY || "your-ecocash-api-key", // API FROM THE ECOCASH DEVELOPERS PORTAL
   environment: "sandbox" as const,
   autoGenerateReference: true,
 };
+
+const customerEcocashPhoneNumber = "2637XXXXXXXX"; // Replace with a valid EcoCash number for testing
 
 // Delay function
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -25,7 +27,7 @@ async function testEcoCashSDK() {
     // Test 1: Make a payment
     console.log("1. Testing payment...");
     const paymentResult = await paymentClient.makePayment({
-      customerEcocashPhoneNumber: "263773403139",
+      customerEcocashPhoneNumber: customerEcocashPhoneNumber,
       amount: 1.0,
       description: "Test payment from SDK",
       currency: "USD",
@@ -49,7 +51,7 @@ async function testEcoCashSDK() {
       console.log("\n2. Testing transaction lookup...");
       if (paymentReference) {
         const lookupResult = await transactionClient.lookupTransaction({
-          sourceMobileNumber: "263773403139",
+          sourceMobileNumber: customerEcocashPhoneNumber,
           sourceReference: paymentReference,
         });
 
@@ -76,7 +78,7 @@ async function testEcoCashSDK() {
         const refundResult = await refundClient.requestRefund({
           originalEcocashTransactionReference: paymentReference,
           refundCorrelator: `REFUND-${Date.now()}`,
-          sourceMobileNumber: "263773403139",
+          sourceMobileNumber: customerEcocashPhoneNumber,
           amount: 1.0,
           clientName: "Test Merchant",
           currency: "USD",
