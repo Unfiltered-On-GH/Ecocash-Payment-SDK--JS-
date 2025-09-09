@@ -86,7 +86,7 @@ async function testEcoCashSDK() {
         });
 
         if (refundResult.success) {
-          console.log("✅ Refund Request successfully sent!");
+          console.log("✅ Refund successfully!");
           console.log("Refund status:", refundResult.status);
           console.log(
             "Full response:",
