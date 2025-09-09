@@ -70,7 +70,7 @@ async function testEcoCashSDK() {
                     reasonForRefund: "Test refund from SDK",
                 });
                 if (refundResult.success) {
-                    console.log("✅ Refund Request successfully sent!");
+                    console.log("✅ Refund successfully!");
                     console.log("Refund status:", refundResult.status);
                     console.log("Full response:", JSON.stringify(refundResult.data, null, 2));
                 }

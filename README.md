@@ -33,20 +33,29 @@ const paymentClient = new EcoCashPayment({
   environment: "sandbox", // or 'live'
 });
 
-// Make a payment
-const result = await paymentClient.makePayment({
-  customerEcocashPhoneNumber: "2637XXXXXXXX",
-  amount: 10.5,
-  description: "Payment for services",
-  currency: "USD",
-});
+async function Payment() {
+  try {
+    const result = await paymentClient.makePayment({
+      customerEcocashPhoneNumber: "2637XXXXXXXX", // Replace with test number
+      amount: 10.5,
+      description: "Payment for services",
+      currency: "USD",
+    });
 
-if (result.success) {
-  console.log("✅ Payment successful! Reference:", result.reference);
-  console.log("Status:", result.status);
-} else {
-  console.error("❌ Payment failed:", result.error);
+    if (result.success) {
+      console.log("✅ Payment successful!");
+      console.log("Reference:", result.reference);
+      console.log("Status:", result.status);
+    } else {
+      console.error("❌ Payment failed:", result.error);
+    }
+  } catch (error) {
+    console.error("⚠️ Unexpected error:", error.message);
+  }
 }
+
+// Run the test
+Payment();
 ```
 
 ### Requesting a Refund
@@ -54,20 +63,38 @@ if (result.success) {
 ```javascript
 const { EcoCashRefund } = require("ecocash-payment-sdk");
 
+// Initialize the refund client
 const refundClient = new EcoCashRefund({
-  apiKey: "your-api-key-here",
-  environment: "sandbox",
+  apiKey: "your-api-key-here", // Replace with your sandbox/live key
+  environment: "sandbox", // Use "live" in production
 });
 
-const refundResult = await refundClient.requestRefund({
-  originalEcocashTransactionReference: "transaction-reference-here",
-  refundCorrelator: "REF123456789",
-  sourceMobileNumber: "2637XXXXXXXX",
-  amount: 10.5,
-  clientName: "Client Name",
-  currency: "USD",
-  reasonForRefund: "Customer requested refund",
-});
+async function Refund() {
+  try {
+    const refundResult = await refundClient.requestRefund({
+      originalEcocashTransactionReference: "transaction-reference-here", // Replace with real reference
+      refundCorrelator: "REF123456789", // Unique refund ID for tracking
+      sourceMobileNumber: "2637XXXXXXXX", // Replace with test number
+      amount: 10.5,
+      clientName: "Client Name",
+      currency: "USD",
+      reasonForRefund: "Customer requested refund",
+    });
+
+    if (refundResult.success) {
+      console.log("✅ Refund successful!");
+      console.log("Refund Reference:", refundResult.reference);
+      console.log("Status:", refundResult.status);
+    } else {
+      console.error("❌ Refund failed:", refundResult.error);
+    }
+  } catch (error) {
+    console.error("⚠️ Unexpected error:", error.message);
+  }
+}
+
+// Run the test
+Refund();
 ```
 
 ### Looking Up a Transaction
@@ -80,14 +107,26 @@ const transactionClient = new EcoCashTransaction({
   environment: "sandbox",
 });
 
-const lookupResult = await transactionClient.lookupTransaction({
-  sourceMobileNumber: "2637XXXXXXXX",
-  sourceReference: "transaction-reference-here",
-});
+async function transactionLookup() {
+  try {
+    const lookupResult = await transactionClient.lookupTransaction({
+      sourceMobileNumber: "2637XXXXXXXX", // Replace with test number
+      sourceReference: "transaction-reference-here", // Replace with real transaction reference
+    });
 
-if (lookupResult.success) {
-  console.log("Transaction status:", lookupResult.data.status);
+    if (lookupResult.success) {
+      console.log("✅ Transaction lookup successful!");
+      console.log("Transaction Status:", lookupResult.data.status);
+      console.log("Transaction Details:", lookupResult.data);
+    } else {
+      console.error("❌ Transaction lookup failed:", lookupResult.error);
+    }
+  } catch (error) {
+    console.error("⚠️ Unexpected error:", error.message);
+  }
 }
+// Run the test
+transactionLookup();
 ```
 
 ## API Reference
@@ -260,11 +299,13 @@ For issues and questions, please create an issue on our [GitHub repository](http
 
 ## Changelog
 
-### 1.0.4
+### 1.0.7
 
 - Support for payments, refunds, and transaction lookups
 - Sandbox and live environment support
 - TypeScript definitions included
+- Auto-generation of Transaction Source Refrences
+- Easier Documentation
 
 ---
 
