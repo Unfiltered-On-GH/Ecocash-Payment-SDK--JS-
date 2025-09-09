@@ -11,7 +11,7 @@ npm install ecocash-payment-sdk
 ### First Things First: Get Your EcoCash API Key
 
 1. Go to the EcoCash Developer's Portal [https://developers.ecocash.co.zw/]
-2. Sign Up or Sign in (An Authuntecator App is FreeOTP App is required)
+2. Sign Up or Sign in (An Authuntecator App is required. EcoCash recommends FreeOTP App)
 
 - PlayStore : https://play.google.com/store/apps/details?id=org.fedorahosted.freeotp
 - AppStore : https://apps.apple.com/us/app/freeotp-authenticator/id872559395
