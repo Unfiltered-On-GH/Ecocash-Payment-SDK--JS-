@@ -3,7 +3,7 @@ import { EcoCashTransaction } from "./src/EcoCashTransaction";
 
 // Test configuration
 const config = {
-  apiKey: "IxPMsN8xsZCHkBgWcy1UZ4hhOKmc-Y1-", // Sandbox key from docs
+  apiKey: "your-api-key", // Sandbox key from docs
   environment: "sandbox" as const,
   autoGenerateReference: true,
 };
