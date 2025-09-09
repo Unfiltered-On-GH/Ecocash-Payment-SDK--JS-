@@ -5,10 +5,11 @@ const EcoCashTransaction_1 = require("./EcoCashTransaction");
 const EcoCashRefund_1 = require("./EcoCashRefund");
 // Test configuration
 const config = {
-    apiKey: "IxPMsN8xsZCHkBgWcy1UZ4hhOKmc-Y1-", // Sandbox key from docs
+    apiKey: process.env.ECOCASH_API_KEY || "your-ecocash-api-key", // API FROM THE ECOCASH DEVELOPERS PORTAL
     environment: "sandbox",
     autoGenerateReference: true,
 };
+const customerEcocashPhoneNumber = "2637XXXXXXXX"; // Replace with a valid EcoCash number for testing
 // Delay function
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 async function testEcoCashSDK() {
@@ -22,13 +23,13 @@ async function testEcoCashSDK() {
         // Test 1: Make a payment
         console.log("1. Testing payment...");
         const paymentResult = await paymentClient.makePayment({
-            customerEcocashPhoneNumber: "263773403139",
+            customerEcocashPhoneNumber: customerEcocashPhoneNumber,
             amount: 1.0,
             description: "Test payment from SDK",
             currency: "USD",
         });
         if (paymentResult.success) {
-            console.log("✅ Payment successful!");
+            console.log("✅ Payment Request successfully sent!");
             console.log("Reference:", paymentResult.reference);
             console.log("Status:", paymentResult.status);
             console.log("Full response:", JSON.stringify(paymentResult.data, null, 2));
@@ -40,11 +41,11 @@ async function testEcoCashSDK() {
             console.log("\n2. Testing transaction lookup...");
             if (paymentReference) {
                 const lookupResult = await transactionClient.lookupTransaction({
-                    sourceMobileNumber: "263773403139",
+                    sourceMobileNumber: customerEcocashPhoneNumber,
                     sourceReference: paymentReference,
                 });
                 if (lookupResult.success) {
-                    console.log("✅ Lookup successful!");
+                    console.log("✅ Lookup Request successfully sent!");
                     console.log("Transaction status:", (_a = lookupResult.data) === null || _a === void 0 ? void 0 : _a.status);
                     console.log("Full response:", JSON.stringify(lookupResult.data, null, 2));
                 }
@@ -56,20 +57,20 @@ async function testEcoCashSDK() {
             // Wait 30 seconds before refund test
             console.log("\n⏳ Waiting 30 seconds before refund test...");
             await delay(30000);
-            // Test 3: Test refund (if we have a reference)
+            // Test 3: Test refund
             console.log("\n3. Testing refund...");
             if (paymentReference) {
                 const refundResult = await refundClient.requestRefund({
                     originalEcocashTransactionReference: paymentReference,
                     refundCorrelator: `REFUND-${Date.now()}`,
-                    sourceMobileNumber: "263773403139",
+                    sourceMobileNumber: customerEcocashPhoneNumber,
                     amount: 1.0,
                     clientName: "Test Merchant",
                     currency: "USD",
                     reasonForRefund: "Test refund from SDK",
                 });
                 if (refundResult.success) {
-                    console.log("✅ Refund successful!");
+                    console.log("✅ Refund Request successfully sent!");
                     console.log("Refund status:", refundResult.status);
                     console.log("Full response:", JSON.stringify(refundResult.data, null, 2));
                 }

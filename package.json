@@ -1,6 +1,6 @@
 {
   "name": "ecocash-payement-sdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An unofficial Node.js SDK for the EcoCash API to facilitate EcoCash mobile money payments, refunds and Transaction Lookup in Zimbabwe.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
