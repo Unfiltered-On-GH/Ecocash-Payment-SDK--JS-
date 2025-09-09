@@ -56,7 +56,7 @@ async function testEcoCashSDK() {
         });
 
         if (lookupResult.success) {
-          console.log("✅ Lookup successful!");
+          console.log("✅ Lookup Request successfully sent!");
           console.log("Transaction status:", lookupResult.data?.status);
           console.log(
             "Full response:",
@@ -86,7 +86,7 @@ async function testEcoCashSDK() {
         });
 
         if (refundResult.success) {
-          console.log("✅ Refund successful!");
+          console.log("✅ Refund Request successfully sent!");
           console.log("Refund status:", refundResult.status);
           console.log(
             "Full response:",
